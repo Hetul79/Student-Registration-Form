@@ -1,5 +1,6 @@
 #!C:\Users\PUJITH SAI KUMAR K\AppData\Local\Programs\Python\Python37-32\python.exe
 
+import cgi
 import mysql.connector as conn
 
 def htmlTop():
@@ -16,15 +17,24 @@ def htmlTail():
 	print("""</body>
 			</html>""")
 
-def execute(db_name,sql):
+def connect_db(db_name):
 	db = conn.connect(host='localhost', user='root',passwd="",database=db_name)
 	cursor = db.cursor()
-	cursor.execute(sql)
-	cursor.close()
+	return db,cursor
+
+def connect_db():
+	db = conn.connect(host='localhost', user='root',passwd="")
+	cursor = db.cursor()
+	return db,cursor
 
 if __name__ == "__main__":
-	htmlTop()
-	sql = "drop database studentdatabase"
-	db_name = "studentdatabase"
-	execute(db_name,sql)
-	htmlTail()
+	try:
+		htmlTop()
+		db,cursor = connect_db()
+		sql = "drop database studentdatabase"
+		cursor.execute(sql)
+		db.commit()
+		cursor.close()
+		htmlTail()
+	except:
+		cgi.print_exception()

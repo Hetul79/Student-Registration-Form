@@ -45,7 +45,7 @@ def createEntity(db,cursor):
 			state varchar(30) not null,
 			city varchar(20) not null,
 			pincode int(6) not null,
-			emailID varchar(50) not null,
+			emailID varchar(50) not null unique,
 			phoneNo text(10) not null,
 			password varchar(255) not null,			
 			creationDateTime DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -61,7 +61,7 @@ if __name__ == "__main__":
 		createEntity(db,cursor)
 		#close the connection to the database
 		cursor.close()
-		print("Hello world")
+		print("Database and table created successfully")
 		htmlTail()
 	except:
 		cgi.print_exception()
